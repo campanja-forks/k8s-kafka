@@ -1,6 +1,7 @@
 #!/bin/bash
 
-SERVER_ID=$(hostname -I | sed -r 's/(.[^ ]+).*/\1/g;s/\.//g')
+# mod 1000 to avoid requirement failed: broker.id must be equal or greater than -1 and not greater than reserved.broker.max.id
+SERVER_ID=$(($(hostname -I | sed -r 's/(.[^ ]+).*/\1/g;s/\.//g') % 1000))
 
 if [ -z "${ZOOKEEPER_CONNECT}" ];then
 	echo "ZOOKEEPER_CONNECT environment variable missing"
